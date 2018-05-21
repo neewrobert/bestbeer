@@ -1,13 +1,14 @@
 package com.desarrollox.model;
 
-import java.io.Serializable;
-
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
-public class User implements Serializable {
+@Table(name = "user")
+public class User extends BaseEntity {
 
 	/**
 	 * 
@@ -17,8 +18,14 @@ public class User implements Serializable {
 	@Id
 	@GeneratedValue
 	private Long id;
+
+	@Column(name = "name", nullable = false)
 	private String name;
+
+	@Column(name = "email", nullable = false)
 	private String email;
+
+	@Column(name = "password", nullable = false)
 	private String password;
 
 	public Long getId() {
