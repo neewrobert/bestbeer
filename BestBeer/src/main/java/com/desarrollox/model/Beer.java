@@ -1,14 +1,15 @@
 package com.desarrollox.model;
 
-import java.io.Serializable;
-
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.Table;
 
 @Entity
-public class Beer implements Serializable {
+@Table(name = "beer")
+public class Beer extends BaseEntity {
 
 	/**
 	 * Classe modelo para a cerveja
@@ -18,13 +19,33 @@ public class Beer implements Serializable {
 	@Id
 	@GeneratedValue
 	private Long id;
+	
+	@Column (name = "name")
 	private String name;
+	
+	@Column (name = "category")
 	private String category;
+	
+	@Column (name = "nationality")
 	private String nationality;
+	
+	@Column (name = "price")
 	private Double price;
 	
 	@Lob
+	@Column (name = "image")
 	private byte[] image;
+	
+	@Column (name = "path")
+	private String path;
+
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
+	}
 
 	public Long getId() {
 		return id;

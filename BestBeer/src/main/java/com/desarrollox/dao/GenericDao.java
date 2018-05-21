@@ -1,76 +1,46 @@
 package com.desarrollox.dao;
 
-import java.io.Serializable;
-import java.util.List;
-
 import javax.persistence.EntityManager;
-import javax.persistence.criteria.CriteriaQuery;
 
-public abstract class GenericDao<T extends Serializable> implements Serializable {
+import com.desarrollox.dao.util.ConnectionFactory;
+import com.desarrollox.model.BaseEntity;
 
-	/**
-	 * Classe DAO  generica para todos os objetos
-	 * Possui metodos pradão para INSERIR, DELETAR, ATUALIZAR, BUSCAR POR ID e BUSCAR TODOS
-	 */
-	private static final long serialVersionUID = 8678449725041854657L;
+public class GenericDao<T extends BaseEntity> {
 
-	private final Class<T> clazz;
-	private EntityManager em;
-	
-	/**
-	 * Construtor para a classe DAO
-	 * @param Entity Manager
-	 * @param Classe a ser persistida
-	 */
-	public GenericDao(EntityManager manager, Class<T> clazz) {
-		this.em = manager;
-		this.clazz = clazz;
+	protected static EntityManager manager = ConnectionFactory.getEntityManager();
+
+	public T findById(Class<T> clazz, Long id) {
+		return manager.find(clazz, id);
 	}
-	
-	
-	/**
-	 *  Metodo responsavel por salvar o Objeto no banco de dados
-	 * @param t - Classe a ser inserida no banco
-	 */
-	public void save(T t) {
-		em.persist(t);
+
+	public void saveOrUpdate(T obj) {
+		try {
+			manager.getTransaction().begin();
+			if (obj.getId() == null) {
+				manager.persist(obj);
+				manager.getTransaction().commit();
+			} else {
+				manager.merge(obj);
+				manager.getTransaction().commit();
+			}
+		} catch (Exception e) {
+			manager.getTransaction().rollback();
+		}
 	}
-	
-	/**
-	 * Metodo responsavel por deletar o objeto no banco
-	 * @param t - Classe a ser deletada no banco
-	 */
-	public void delete(T t) {
-		em.remove(t);
-	}
-	
-	/**
-	 * Metodo responsavel por atualizar o objeto no banco
-	 * @param t - Classe a ser atualizada no banco
-	 */
-	public void update(T t) {
-		em.merge(t);
-	}
-	
-	/**
-	 * Metodo responsavel por buscar o objeto no banco
-	 * @param Long id - Identificador do objeto a ser buscado
-	 */
-	public T findById(Integer id) {
-		T instance = em.find(clazz, id);
-		return instance;
-	}
-	
-	/**
-	 * Lista todos os Objetos no banco
-	 * 
-	 * @return List<T> - Retorna uma lista com os objetos encontrados
-	 */
-	public List<T> getAll() {
-		CriteriaQuery<T> query = em.getCriteriaBuilder().createQuery(clazz);
-		query.select(query.from(clazz));
-		List<T> list = em.createQuery(query).getResultList();
-		return list;
+
+	public void remove(Class<T> clazz, Long id) {
+
+		T t = findById(clazz, id);
+
+		try {
+
+			manager.getTransaction().begin();
+			manager.remove(t);
+			manager.getTransaction().commit();
+		} catch (Exception e) {
+			manager.getTransaction().rollback();
+		}
+
 	}
 
 }
