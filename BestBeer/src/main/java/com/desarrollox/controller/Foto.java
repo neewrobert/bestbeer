@@ -1,6 +1,7 @@
 package com.desarrollox.controller;
 
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -19,12 +20,18 @@ public class Foto extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		String id = req.getParameter("nome");
-		BeerDao dao = new BeerDao();
+		String nome = req.getParameter("nome");
 		
-		Beer beer = dao.findById(Beer.class, Long.parseLong(id));
+		String strPath = req.getServletContext().getRealPath("foto");
+		Path path = Paths.get(strPath, nome);
+		byte[] imageBytes;
 		
-		byte[] imageBytes = beer.getImage();
+		if(nome != null && !nome.isEmpty() && Files.exists(path)) {
+			imageBytes = Files.readAllBytes(path);
+		}else {
+			path = Paths.get(strPath, "garrafa.jpg");
+			imageBytes = Files.readAllBytes(path);
+		}
 		
 		resp.setContentType("image/jpg");
 		resp.setContentLength(imageBytes.length);

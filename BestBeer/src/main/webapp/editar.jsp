@@ -11,9 +11,10 @@ pageEncoding="UTF-8"%>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
-  <title>The BEST BEER - DASHBOARD</title>
+  <title>The BEST BEER - EDITAR</title>
   <!-- Bootstrap core CSS-->
   <link href="resources/bootstrap/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="resources/bootstrap/vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
   <!-- Custom fonts for this template-->
   <link href="resources/bootstrap/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
   <!-- Custom styles for this template-->
@@ -78,8 +79,6 @@ pageEncoding="UTF-8"%>
       </ul>
     </div>
   </nav>
-  
-  <!-- conteido -->
   <div class="content-wrapper">
     <div class="container-fluid">
       <!-- Breadcrumbs-->
@@ -87,67 +86,77 @@ pageEncoding="UTF-8"%>
         <li class="breadcrumb-item">
           <a href="dashboard">Dashboard</a>
         </li>
-        <li class="breadcrumb-item active">DashBoard - Lista</li>
+        <li class="breadcrumb-item active">Edição</li>
       </ol>
       <div class="row">
         <div class="col-12">
-         	<div class="card mb-3">
-				<div class="card-header">
-					<i class="fa fa-table"></i> Lista de Produtos
-				</div>
-				<div class="card-body">
-					<div class="table-responsive">
-						<table class="table table-bordered" id="dataTable" width="100%"
-							cellspacing="0">
-							<thead>
-         						<tr class="text-center">
-         							<th>ID</th>
-									<th>Foto</th>
-									<th>Nome</th>
-									<th>Categoria</th>
-									<th>Nacionalidade</th>
-									<th>Preço</th>
-									<th colspan="2">Ação</th>
-								</tr>
-         					</thead>
-         					<tfoot>
-         						<tr class="text-center">
-         							<th>ID</th>
-									<th>Foto</th>
-									<th>Nome</th>
-									<th>Categoria</th>
-									<th>Nacionalidade</th>
-									<th>Preço</th>
-									<th colspan="2">Ação</th>
-								</tr>
-         					</tfoot>
-         					<tbody>
-         						<c:forEach items="${beers}" var="beer">
-         							<tr class="text-center">
-         								<td> ${beer.id} </td>
-         								<td><img width="64" src="foto?nome=${beer.path}"></td>
-         								<td> ${beer.name} </td>
-         								<td> ${beer.category} </td>
-         								<td> ${beer.nationality} </td>
-         								<td> ${beer.price} </td>
-         								<td>
-         									<a href="editar?id=${beer.id}" class="nav-link">
-            								<i class="fa fa-fw fa-edit"></i>Editar</a>
-         								</td>
-         								<td>
-         									<a href="" class="nav-link" id="idExcluir" data-id="${beer.id}" data-toggle="modal"  data-target="#excluirModal">
-            								<i class="fa fa-fw fa-window-close"></i>Excluir</a>
-         								 </td>
-         							</tr>
-         						</c:forEach>
-         					</tbody>
-         				</table>
-         			</div>
-         		</div>
-         	</div>
-        </div>
+        	<div class="container">
+    			<div class="card card-register-product mx-auto mt-5">
+      			<div class="card-header">Edição de Produto</div>
+     				<div class="card-body">		
+				        <form action="editar" method="post" enctype="multipart/form-data">
+				        	<div class="form-group">
+				            	<div class="form-row">
+				              		<div class="input-group mb-3">
+					              		<div class="input-group-prepend">
+					              		<span class="input-group-text">Imagem</span>
+					              		</div>
+						              		<div class="custom-file">
+						              			<label class="custom-file-label" for="inputImage">Escolha a Foto</label>
+						              			<input type="file" name="imagem" class="custom-file-input" id="inputImage">
+						              		</div>
+						              		<br>
+				              		</div>
+						              		<div class="nomeFile"> </div>
+				           		</div>
+				          	</div>
+				          	<div class="form-group">
+            					<div class="form-row">
+            						<div class="col-md-6">
+										<img width="64" class="img-fluid" id="imgFile" alt="Responsive image" src="foto?nome=${beer.path}">				          	
+            						</div>
+            						<div class="col-md-6">
+				                		<label for="inputId">ID</label>
+				                		<input class="form-control" name="id" id="inputId" type="text" readonly="readonly"  value="${beer.id}">
+				              		</div>
+            					</div>
+            					<div class="form-row">
+            						<div class="col-md-6">
+				                		<label for="inputName">Nome</label>
+				                		<input class="form-control" name="nome" id="inputName" type="text"  placeholder="Nome do produto" value="${beer.name}">
+				              		</div>
+            						<div class="col-md-6">
+		            					<label for="inputNacionalidade">Nacionalidade</label>
+		            					<input class="form-control" name="nacionalidade" id="inputNacionalidade" type="text"  placeholder="Nacionalidade" value="${beer.nationality}"">
+          							</div>
+          							<div class="col-md-6">
+						                <label for="inputCategoria">Categoria</label>
+						                <input class="form-control" name="categoria" id="inputCategoria" type="text" placeholder="Categoria" value="${beer.category}">
+              						</div>
+					              	<div class="col-md-6">
+					              		<label for="inputPreco">Preço</label>
+					              		<div class="input-group mb-3">
+						              		<div class="input-group-prepend">
+						              			<span class="input-group-text">R$ 0.00</span>
+						              		</div>
+							                <input class="form-control" name="preco" id="inputPreco" aria-label="Amount" type="text" value="${beer.price}" placeholder="0.00">
+					              		</div>
+					              	</div>
+          						</div>
+            				</div>
+   				
+          						 <div class = "alert alert-danger" style="display: ${empty erro ? 'none' : ''}" > 
+									<a class="close text-center" data-dismiss="alert"> × </a> 
+									<a class="text-center"> ${erro} </a>
+								 </div> 
+          					<input type="submit" class="btn btn-primary btn-block" value="Cadastrar">
+				        </form>
+        			</div>
+       			</div>
+        	</div>
       </div>
-    </div>
+     </div>
+   </div>
     <!-- /.container-fluid-->
     <!-- /.content-wrapper-->
     <footer class="sticky-footer">
@@ -179,27 +188,6 @@ pageEncoding="UTF-8"%>
         </div>
       </div>
     </div>
-    
-      <!-- Excluir Modal-->
-    <div class="modal fade" id="excluirModal" tabindex="-1" role="dialog" aria-labelledby="excluirModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="excluirModalLabel">Excluir</h5>
-            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">X</span>
-            </button>
-          </div>
-          <div class="modal-body">Deseja excluir o produto ? </div>
-          <div class="modal-footer">
-            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-            <div class="btn-excluir">
-            <a class="btn btn-primary" id="excluirModal" onclick="excluirFunction(this)" >Excluir</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
     <!-- Bootstrap core JavaScript-->
     <script src="resources/bootstrap/vendor/jquery/jquery.min.js"></script>
     <script src="resources/bootstrap/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -207,8 +195,23 @@ pageEncoding="UTF-8"%>
     <script src="resources/bootstrap/vendor/jquery-easing/jquery.easing.min.js"></script>
     <!-- Custom scripts for all pages-->
     <script src="resources/bootstrap/js/sb-admin.min.js"></script>
-    <script src="resources/bootstrap/js/jquery-3.3.1.js"></script>
- 
+    <script>
+    	var div = document.getElementsByClassName("nomeFile")[0];
+    	var input  = document.getElementById("inputImage");
+    	
+    	div.addEventListener("click", function(){
+    	input.click();
+			});
+			input.addEventListener("change", function(){
+			    var nome = "Não há arquivo selecionado. Selecionar arquivo...";
+			    if(input.files.length > 0){
+			     	nome = input.files[0].name;
+			    	document.getElementById("imgFile").style.display = 'none';
+			    }
+			    div.innerHTML = nome;
+			});
+    	
+    </script>
   </div>
 </body>
 

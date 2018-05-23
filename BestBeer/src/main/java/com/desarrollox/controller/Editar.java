@@ -1,9 +1,6 @@
 package com.desarrollox.controller;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -16,27 +13,33 @@ import com.desarrollox.controller.util.ServletUtil;
 import com.desarrollox.dao.BeerDao;
 import com.desarrollox.model.Beer;
 
-@WebServlet("/cadastro")
+/**
+ * Servlet implementation class Editar
+ */
+@WebServlet("/editar")
 @MultipartConfig
-public class Cadastro extends HttpServlet {
+public class Editar extends HttpServlet {
+	private static final long serialVersionUID = 1L;
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 2104831457555878437L;
-
-	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		req.getRequestDispatcher("cadastro.jsp").forward(req, resp);
+		
+	BeerDao dao = new BeerDao();
+		
+		String id = req.getParameter("id");
+		
+		Beer beer = dao.findById(Beer.class, Long.parseLong(id));
+		
+		req.setAttribute("beer", beer);
+		req.getRequestDispatcher("editar.jsp").forward(req, resp);
 	}
 
-	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
 		BeerDao dao = new BeerDao();
 		ServletUtil util = ServletUtil.getInstance();
 		Beer beer;
 		
+		String id = req.getParameter("id");
 		String nome = req.getParameter("nome");
 		String categoria = req.getParameter("categoria");
 		String preco = req.getParameter("preco");
@@ -44,7 +47,8 @@ public class Cadastro extends HttpServlet {
 		
 		
 		beer = new Beer();
-
+		
+		beer.setId(Long.parseLong(id));
 		beer.setName(nome);
 		beer.setCategory(categoria);
 		beer.setPrice(Double.parseDouble(preco));
@@ -66,7 +70,7 @@ public class Cadastro extends HttpServlet {
 		
 		dao.saveOrUpdate(beer);
 		
-		resp.sendRedirect("cadastro.jsp");
+		resp.sendRedirect("dashboard");
 
 	}
 
