@@ -26,7 +26,7 @@
     <servlet-name>cadastro</servlet-name>
     <servlet-class>com.desarrollox.controller.Cadastro</servlet-class>
   </servlet>
-   <servlet>
+  <servlet>
     <servlet-name>editar</servlet-name>
     <servlet-class>com.desarrollox.controller.Editar</servlet-class>
   </servlet>

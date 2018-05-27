@@ -28,9 +28,23 @@ public class GenericDao<T extends BaseEntity> {
 		}
 	}
 
-	public void remove(Class<T> clazz, Long id) {
+	public void removeById(Class<T> clazz, Long id) {
 
 		T t = findById(clazz, id);
+
+		try {
+
+			manager.getTransaction().begin();
+			manager.remove(t);
+			manager.getTransaction().commit();
+		} catch (Exception e) {
+			manager.getTransaction().rollback();
+		}
+
+	}
+
+	public void removeByObj(T t) {
+
 
 		try {
 

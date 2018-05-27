@@ -60,11 +60,11 @@ pageEncoding="UTF-8"%>
       </ul>
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-          <form class="form-inline my-2 my-lg-0 mr-lg-2">
+          <form class="form-inline my-2 my-lg-0 mr-lg-2" action="buscar" method="post">
             <div class="input-group">
-              <input class="form-control" type="text" placeholder="Search for...">
+              <input class="form-control" type="text" name="busca" placeholder="Buscar por...">
               <span class="input-group-append">
-                <button class="btn btn-primary" type="button">
+                <button class="btn btn-primary" type="submit">
                   <i class="fa fa-search"></i>
                 </button>
               </span>
@@ -135,7 +135,7 @@ pageEncoding="UTF-8"%>
             								<i class="fa fa-fw fa-edit"></i>Editar</a>
          								</td>
          								<td>
-         									<a href="" class="nav-link" id="idExcluir" data-id="${beer.id}" data-toggle="modal"  data-target="#excluirModal">
+         									<a href="" class="nav-link" id="idExcluir" data-id="${beer.id}" data-toggle="modal"  data-target="#excluirModal" onclick="populaModalExcluir(${beer.id})">
             								<i class="fa fa-fw fa-window-close"></i>Excluir</a>
          								 </td>
          							</tr>
@@ -193,8 +193,8 @@ pageEncoding="UTF-8"%>
           <div class="modal-body">Deseja excluir o produto ? </div>
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-            <div class="btn-excluir">
-            <a class="btn btn-primary" id="excluirModal" onclick="excluirFunction(this)" >Excluir</a>
+            <div class="btn-excluir" id="btn-excluir">
+            <a class="btn btn-primary" id="excluirModalBtn" >Excluir</a>
             </div>
           </div>
         </div>
@@ -208,6 +208,17 @@ pageEncoding="UTF-8"%>
     <!-- Custom scripts for all pages-->
     <script src="resources/bootstrap/js/sb-admin.min.js"></script>
     <script src="resources/bootstrap/js/jquery-3.3.1.js"></script>
+    
+    <script type="text/javascript">
+    	
+    	function populaModalExcluir(id){
+    		element = document.getElementById('btn-excluir');
+   			var excluir = 'Excluir' 
+    		element.innerHTML = '<a href="excluir?id=' + id +'"' + 'class="btn btn-primary" id="excluirModalBtn" >' + excluir + '</a>';
+    		
+    	}
+    
+    </script>
  
   </div>
 </body>
