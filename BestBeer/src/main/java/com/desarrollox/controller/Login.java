@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.desarrollox.dao.UserDao;
 import com.desarrollox.model.User;
@@ -32,14 +33,13 @@ public class Login extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
+
 		ValidationService validator = ValidationService.getInstance();
 
 		String login = req.getParameter("login");
 		String pass = req.getParameter("password");
-		
-		
-		if(!validator.isValidEmail(login)) {
+
+		if (!validator.isValidEmail(login)) {
 			req.setAttribute("erro", Error.EMAIL_INVALID.getMessage());
 
 			RequestDispatcher dis = req.getRequestDispatcher("login.jsp");
@@ -51,7 +51,11 @@ public class Login extends HttpServlet {
 		user.setPassword(pass);
 
 		UserDao dao = new UserDao();
-		if (dao.isUserExist(user)) {
+		User userFound = dao.isUserExist(user);
+		if (userFound != null) {
+			HttpSession session = req.getSession();
+			session.setAttribute("userId", userFound.getId().toString());
+			session.setMaxInactiveInterval(600);
 			resp.sendRedirect("dashboard");
 		} else {
 			req.setAttribute("erro", Error.USER_NOT_FOUND.getMessage());

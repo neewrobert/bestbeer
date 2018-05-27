@@ -174,7 +174,7 @@ pageEncoding="UTF-8"%>
           <div class="modal-body">Aperte "SAIR" abaixo se você deseja sair da sessão.</div>
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-            <a class="btn btn-primary" href="login.jsp">SAIR</a>
+            <a class="btn btn-primary" href="sair">SAIR</a>
           </div>
         </div>
       </div>

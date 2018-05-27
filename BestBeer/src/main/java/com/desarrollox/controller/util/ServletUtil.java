@@ -4,7 +4,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 import com.desarrollox.util.ValidationService;
@@ -56,6 +59,15 @@ public class ServletUtil {
 		arquivo.write(path + "/" + nomeArq);
 		
 		return nomeArq;
+	}
+	
+	public void validadeSession(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		HttpSession session = req.getSession();
+		String userId = (String) session.getAttribute("userId");
+		if (userId == null) {
+			req.getRequestDispatcher("login.jsp").forward(req, resp);
+		}
 	}
 
 }

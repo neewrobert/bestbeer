@@ -64,7 +64,7 @@ pageEncoding="UTF-8"%>
 			${erro}
 		  </div> 
         <div class="text-center">
-          <a class="d-block small mt-3" href="login.">Login Page</a>
+          <a class="d-block small mt-3" href="login">Login Page</a>
         </div>
       </div>
     </div>

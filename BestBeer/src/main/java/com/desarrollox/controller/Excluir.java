@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.desarrollox.controller.util.ServletUtil;
 import com.desarrollox.dao.BeerDao;
 import com.desarrollox.model.Beer;
 
@@ -16,21 +17,23 @@ import com.desarrollox.model.Beer;
 @WebServlet("/excluir")
 public class Excluir extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    
+
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		
-		String id  = request.getParameter("id");
-		
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		ServletUtil servletUtil = ServletUtil.getInstance();
+		servletUtil.validadeSession(request, response);
+
+		String id = request.getParameter("id");
+
 		BeerDao dao = new BeerDao();
-	
+
 		dao.removeById(Beer.class, Long.parseLong(id));
-		
-		
+
 		response.sendRedirect("dashboard");
 	}
 

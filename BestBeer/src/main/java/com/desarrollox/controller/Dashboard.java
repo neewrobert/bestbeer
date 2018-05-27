@@ -9,7 +9,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import com.desarrollox.controller.util.ServletUtil;
 import com.desarrollox.dao.BeerDao;
 import com.desarrollox.model.Beer;
 
@@ -20,21 +22,22 @@ import com.desarrollox.model.Beer;
 @MultipartConfig
 public class Dashboard extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
+
+		ServletUtil servletUtil = ServletUtil.getInstance();
+
+		servletUtil.validadeSession(req, resp);
+
 		List<Beer> beers = new BeerDao().getAllBeers();
-		
+
 		req.setAttribute("beers", beers);
-		
+
 		req.getRequestDispatcher("dashboard.jsp").forward(req, resp);
 	}
-
-	
 
 }

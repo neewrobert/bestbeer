@@ -7,19 +7,20 @@ import com.desarrollox.model.User;
 
 public class UserDao extends GenericDao<User> {
 
-	public boolean isUserExist(User user) {
+	public User isUserExist(User user) {
 		
+		User result;
 		TypedQuery<User> query = manager.createQuery("select u from User u" + " where u.email = :pEmail and u.password = :pSenha", User.class);
 
 		query.setParameter("pEmail", user.getEmail());
 		query.setParameter("pSenha", user.getPassword());
 		try {
-			User result = query.getSingleResult();
+			result = query.getSingleResult();
 		} catch (NoResultException e) {
-			return false;
+			return null;
 		}
 
-		return true;
+		return result;
 	}
 
 }
