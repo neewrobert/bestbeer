@@ -1,8 +1,8 @@
 package com.desarrollox.controller;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -16,6 +16,7 @@ import javax.servlet.http.Part;
 import com.desarrollox.controller.util.ServletUtil;
 import com.desarrollox.dao.BeerDao;
 import com.desarrollox.model.Beer;
+import com.desarrollox.model.Categoria;
 
 @WebServlet("/cadastro")
 @MultipartConfig
@@ -34,6 +35,12 @@ public class Cadastro extends HttpServlet {
 		if (userId == null) {
 			req.getRequestDispatcher("login.jsp").forward(req, resp);
 		}else {
+			
+			Categoria[] categoriasArray = Categoria.values();
+			
+			List<Categoria> categorias = Arrays.asList(categoriasArray);
+			
+			req.setAttribute("categorias", categorias);
 			req.getRequestDispatcher("cadastro.jsp").forward(req, resp);
 		}
 	}
@@ -46,6 +53,10 @@ public class Cadastro extends HttpServlet {
 		if (userId == null) {
 			req.getRequestDispatcher("login.jsp").forward(req, resp);
 		}
+		
+		Categoria[] categoriasArray = Categoria.values();
+		
+		List<Categoria> categorias = Arrays.asList(categoriasArray);
 
 		BeerDao dao = new BeerDao();
 		ServletUtil util = ServletUtil.getInstance();

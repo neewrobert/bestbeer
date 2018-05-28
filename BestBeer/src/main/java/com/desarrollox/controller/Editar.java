@@ -1,6 +1,9 @@
 package com.desarrollox.controller;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -12,6 +15,7 @@ import javax.servlet.http.Part;
 import com.desarrollox.controller.util.ServletUtil;
 import com.desarrollox.dao.BeerDao;
 import com.desarrollox.model.Beer;
+import com.desarrollox.model.Categoria;
 
 /**
  * Servlet implementation class Editar
@@ -26,6 +30,11 @@ public class Editar extends HttpServlet {
 		ServletUtil servletUtil = ServletUtil.getInstance();
 		servletUtil.validadeSession(req, resp);
 		
+		Categoria[] categoriasArray = Categoria.values();
+		
+		List<Categoria> categorias = Arrays.asList(categoriasArray);
+		
+		req.setAttribute("categorias", categorias);
 		
 		BeerDao dao = new BeerDao();
 

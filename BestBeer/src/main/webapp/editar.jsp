@@ -37,13 +37,13 @@ pageEncoding="UTF-8"%>
           </a>
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
-          <a class="nav-link" href="cadastro.jsp">
+          <a class="nav-link" href="cadastro">
             <i class="fa fa-fw fa-file-text-o"></i>
             <span class="nav-link-text">Cadastro de Produtos</span>
           </a>
         </li>
          <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
-          <a class="nav-link" href="register.jsp">
+          <a class="nav-link" href="register">
             <i class="fa fa-fw fa-user-plus"></i>
             <span class="nav-link-text">Cadastro de Usuario</span>
           </a>
@@ -59,7 +59,7 @@ pageEncoding="UTF-8"%>
           </a>
         </li>
       </ul>
-      <ul class="navbar-nav ml-auto">
+   	 <ul class="navbar-nav ml-auto">
         <li class="nav-item">
           <form class="form-inline my-2 my-lg-0 mr-lg-2" action="buscar" method="post">
             <div class="input-group">
@@ -130,8 +130,15 @@ pageEncoding="UTF-8"%>
 		            					<input class="form-control" name="nacionalidade" id="inputNacionalidade" type="text"  placeholder="Nacionalidade" value="${beer.nationality}"">
           							</div>
           							<div class="col-md-6">
-						                <label for="inputCategoria">Categoria</label>
-						                <input class="form-control" name="categoria" id="inputCategoria" type="text" placeholder="Categoria" value="${beer.category}">
+						                <label for="categoria">Categoria</label>
+					                	<select name="categoria" class="custom-select">
+					                		<c:forEach items="${categorias}" var="categoria">
+					                			<c:if test="${beer.category eq categoria.nome}">
+					                				<option selected="selected" value="${categoria.nome}" label="${categoria.nome}" />
+					                			</c:if>
+					                			<option value="${categoria.nome}" label="${categoria.nome}" />
+					                		</c:forEach>
+						                </select>
               						</div>
 					              	<div class="col-md-6">
 					              		<label for="inputPreco">Preço</label>
@@ -183,7 +190,7 @@ pageEncoding="UTF-8"%>
           <div class="modal-body">Aperte "SAIR" abaixo se você deseja sair da sessão.</div>
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-            <a class="btn btn-primary" href="login.jsp">SAIR</a>
+            <a class="btn btn-primary" href="sair">SAIR</a>
           </div>
         </div>
       </div>

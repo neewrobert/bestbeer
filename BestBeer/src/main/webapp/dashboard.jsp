@@ -36,13 +36,13 @@ pageEncoding="UTF-8"%>
           </a>
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
-          <a class="nav-link" href="cadastro.jsp">
+          <a class="nav-link" href="cadastro">
             <i class="fa fa-fw fa-file-text-o"></i>
             <span class="nav-link-text">Cadastro de Produtos</span>
           </a>
         </li>
          <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
-          <a class="nav-link" href="register.jsp">
+          <a class="nav-link" href="register">
             <i class="fa fa-fw fa-user-plus"></i>
             <span class="nav-link-text">Cadastro de Usuario</span>
           </a>
@@ -136,7 +136,7 @@ pageEncoding="UTF-8"%>
          								</td>
          								<td>
          									<a href="" class="nav-link" id="idExcluir" data-id="${beer.id}" data-toggle="modal"  data-target="#excluirModal" onclick="populaModalExcluir(${beer.id})">
-            								<i class="fa fa-fw fa-window-close"></i>Excluir</a>
+  	         								<i class="fa fa-fw fa-window-close"></i>Excluir</a>
          								 </td>
          							</tr>
          						</c:forEach>
